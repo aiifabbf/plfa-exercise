@@ -23,3 +23,10 @@ eq-congruence-function : forall (A B : Set)
     -> Eq B (f x) (g x)
 -- eq-congruence-function A B f g (refl (A -> B) f) x = refl B (f x)
 eq-congruence-function A B f g (refl _ f) x = refl B (f x)
+
+eq-transitivity : forall (T : Set)
+    -> forall (m n p : T)
+    -> Eq T m n
+    -> Eq T n p
+    -> Eq T m p
+eq-transitivity T m n p (refl T n) (refl T n) = refl T n
