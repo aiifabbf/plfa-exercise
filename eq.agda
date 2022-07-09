@@ -30,3 +30,23 @@ eq-transitivity : forall (T : Set)
     -> Eq T n p
     -> Eq T m p
 eq-transitivity T m n p (refl T n) (refl T n) = refl T n
+
+LeibnizEq : forall (T : Set)
+    -> forall (x y : T)
+    -> Set1
+LeibnizEq T x y = forall (p : T -> Set)
+    -> p x
+    -> p y
+
+private
+    helper : forall (T : Set)
+        -> forall (x : T)
+        -> forall (p : T -> Set)
+        -> p x
+        -> p x
+    helper T x p t = t
+
+leibniz-eq-reflexivity : forall (T : Set)
+    -> forall (x : T)
+    -> LeibnizEq T x x
+leibniz-eq-reflexivity T x = helper T x
