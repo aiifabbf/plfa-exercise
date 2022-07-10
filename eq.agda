@@ -38,15 +38,23 @@ LeibnizEq T x y = forall (p : T -> Set)
     -> p x
     -> p y
 
-private
-    helper : forall (T : Set)
-        -> forall (x : T)
-        -> forall (p : T -> Set)
-        -> p x
-        -> p x
-    helper T x p t = t
-
 leibniz-eq-reflexivity : forall (T : Set)
     -> forall (x : T)
     -> LeibnizEq T x x
-leibniz-eq-reflexivity T x = helper T x
+leibniz-eq-reflexivity T x = let
+        helper : forall (T : Set)
+            -> forall (x : T)
+            -> forall (p : T -> Set)
+            -> p x
+            -> p x
+        helper T x p t = t
+    in
+        helper T x
+-- leibniz-eq-reflexivity T x p px = px
+
+leibniz-eq-transitivity : forall (T : Set)
+    -> forall (x y z : T)
+    -> LeibnizEq T x y
+    -> LeibnizEq T y z
+    -> LeibnizEq T x z
+leibniz-eq-transitivity T x y z x-eq-y y-eq-z p px = y-eq-z p (x-eq-y p px)
