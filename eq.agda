@@ -58,3 +58,17 @@ leibniz-eq-transitivity : forall (T : Set)
     -> LeibnizEq T y z
     -> LeibnizEq T x z
 leibniz-eq-transitivity T x y z x-eq-y y-eq-z p px = y-eq-z p (x-eq-y p px)
+
+leibniz-eq-symmetricity : forall (T : Set)
+    -> forall (x y : T)
+    -> LeibnizEq T x y
+    -> LeibnizEq T y x
+leibniz-eq-symmetricity T x y x-eq-y p = let
+        q : T -> Set
+        q n = p n -> p x
+        qx : q x
+        qx = leibniz-eq-reflexivity T x p
+        qy : q y
+        qy = x-eq-y q qx
+    in
+        qy
